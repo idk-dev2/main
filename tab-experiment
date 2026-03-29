@@ -41,6 +41,13 @@ NotesSection:Label("+ target info panel added")
 NotesSection:Label("+ instant hit")
 NotesSection:Label("+ underground resolver removed")
 NotesSection:Label("+ SA")
+NotesSection:Label("Credits")
+NotesSection:Label("@caualelek42 ( helped massivily in making Silent aim and instant hit )")
+NotesSection:Label("@p3x8 ( helped with being the fist tester and finding bugs )")
+NotesSection:Label("@Tarkov_Killa ( another tester and helping alot )")
+NotesSection:Label("@ext_lover ( help with key system )")
+
+
 
 local CFG_FOLDER = "ExchangeHook/Configs"
 local function cfgEnsure()
