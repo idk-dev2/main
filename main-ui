@@ -5951,7 +5951,7 @@ drawESPEntry = function(d, char, color, myHRP)
                 local uac = p.Status:FindFirstChild("UAC")
                 local rptFolder = uac and uac:FindFirstChild("Reports")
                 local count = 0
-                if rptFolder then for _ in pairs(rptFolder:GetAttributes()) do count += 1 end end
+                if rptFolder then for _, val in pairs(rptFolder:GetAttributes()) do count += (tonumber(tostring(val)) or 1) end end
                 d.reportTxt.Text = "Reports: " .. count
                 d.reportTxt.Color = count >= 3 and Color3.fromRGB(255, 80, 80) or Color3.fromRGB(200, 200, 200)
                 local yOff = espS.showHSR and 28 or 16
