@@ -138,10 +138,34 @@ do
         if plr.Name ~= player.Name then _playerList[#_playerList+1] = plr.Name end
     end
 
-    PlrInfoSection:Dropdown({
+    local _targetDropdown = PlrInfoSection:Dropdown({
         Title="target", Flag="ReportTarget", List=_playerList, Default=_playerList[1],
         Callback = function(v) _targetName = v; _nameLabel:Set("player: " .. v) end
     })
+
+    -- Rebuild the dropdown list from current players
+    local function _rebuildPlayerList()
+        local list = {player.Name}
+        for _, plr in ipairs(game:GetService("Players"):GetPlayers()) do
+            if plr.Name ~= player.Name then list[#list+1] = plr.Name end
+        end
+        _playerList = list
+        pcall(function() _targetDropdown:Refresh(list) end)
+    end
+
+    -- Update dropdown when players join or leave
+    game:GetService("Players").PlayerAdded:Connect(function()
+        task.wait(0.1) -- small wait so GetPlayers() includes the new arrival
+        _rebuildPlayerList()
+    end)
+
+    game:GetService("Players").PlayerRemoving:Connect(function(plr)
+        if _targetName == plr.Name then
+            _targetName = player.Name
+            _nameLabel:Set("player: " .. player.Name)
+        end
+        task.defer(_rebuildPlayerList) -- defer so GetPlayers() has already removed them
+    end)
 
     local function _getEntry(name)
         local rl = ReplicatedStorage:FindFirstChild("ReportList")
